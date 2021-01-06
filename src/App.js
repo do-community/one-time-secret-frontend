@@ -40,7 +40,7 @@ function CreateSecretForm() {
 
     try {
       const { data } = await axios.post(
-        "https://python-ots-app-8p2lv.ondigitalocean.app/secrets",
+        "https://python-ots-app-8p2lv.ondigitalocean.app/api/secrets",
         {
           message,
           passphrase
@@ -105,7 +105,7 @@ function ShowSecretForm() {
       const {
         data
       } = await axios.post(
-        `https://python-ots-app-8p2lv.ondigitalocean.app/secrets/${id}`,
+        `https://python-ots-app-8p2lv.ondigitalocean.app/api/secrets/${id}`,
         { id, passphrase }
       );
 
