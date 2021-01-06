@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 export default function App() {
   return (
     <div className="relative lg:grid lg:grid-cols-2">
-      <Info />
+      {/* <Info /> */}
 
       <div className="lg:min-h-screen flex justify-center items-center py-20 px-10 bg-green-500 text-green-100">
         <div className="max-w-xl mx-auto">
@@ -37,19 +38,21 @@ function CreateSecretForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const res = await fetch(
-      "https://python-ots-app-8p2lv.ondigitalocean.app/secrets",
-      {
-        method: "POST",
-        data: JSON.stringify({ message, passphrase }),
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    const data = await res.json();
+    try {
+      const { data } = await axios.post(
+        "https://python-ots-app-8p2lv.ondigitalocean.app/secrets",
+        {
+          message,
+          passphrase
+        }
+      );
 
-    // now we have a hash/id from the api
-    // display that to the user so they can give that to friends
-    setSecretId(data.id);
+      // now we have a hash/id from the api
+      // display that to the user so they can give that to friends
+      setSecretId(data.id);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
@@ -98,18 +101,20 @@ function ShowSecretForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const res = await fetch(
-      `https://python-ots-app-8p2lv.ondigitalocean.app/secrets/${id}`,
-      {
-        method: "POST",
-        data: JSON.stringify({ id, passphrase }),
-      }
-    );
-    const data = await res.json();
+    try {
+      const {
+        data
+      } = await axios.post(
+        `https://python-ots-app-8p2lv.ondigitalocean.app/secrets/${id}`,
+        { id, passphrase }
+      );
 
-    // now we have a hash/id from the api
-    // display that to the user so they can give that to friends
-    alert(data);
+      // now we have a hash/id from the api
+      // display that to the user so they can give that to friends
+      setSecretMessage(data.message);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
@@ -145,8 +150,9 @@ function ShowSecretForm() {
         <div className="bg-white text-gray-800 p-4 rounded shadow mt-10">
           <p className="mb-3">
             Your secret message is{" "}
-            <strong className="text-blue-400 font-bold">{secretMessage}</strong>
-            .
+            <strong className="block text-blue-400 font-bold mt-4 text-xl">
+              {secretMessage}
+            </strong>
           </p>
         </div>
       )}
