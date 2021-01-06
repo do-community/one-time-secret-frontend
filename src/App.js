@@ -2,7 +2,9 @@ import React, { useState } from "react";
 
 export default function App() {
   return (
-    <div className="lg:grid lg:grid-cols-2">
+    <div className="relative lg:grid lg:grid-cols-2">
+      <Info />
+
       <div className="lg:min-h-screen flex justify-center items-center py-20 px-10 bg-green-500 text-green-100">
         <div className="max-w-xl mx-auto">
           {/* create a secret message */}
@@ -70,7 +72,7 @@ function CreateSecretForm() {
           onChange={(e) => setPassphrase(e.target.value)}
         />
 
-        <button className="py-2 px-4 rounded bg-yellow-400 text-yellow-900 text-sm">
+        <button className="py-4 px-6 rounded bg-yellow-400 text-yellow-900 text-lg">
           Create My Secret
         </button>
       </form>
@@ -133,7 +135,7 @@ function ShowSecretForm() {
           onChange={(e) => setPassphrase(e.target.value)}
         />
 
-        <button className="py-2 px-4 rounded bg-red-400 text-red-900 text-sm">
+        <button className="py-4 px-6 rounded bg-red-400 text-red-900 text-lg">
           Show My Secret
         </button>
       </form>
@@ -149,5 +151,21 @@ function ShowSecretForm() {
         </div>
       )}
     </>
+  );
+}
+
+function Info() {
+  return (
+    <div className="bg-white rounded shadow-2xl absolute top-0 right-0 mr-8 mt-8 p-5">
+      <h2 className="font-bold text-xl mb-4">One Time Secret App</h2>
+
+      <p>
+        A demo app built to showcase{" "}
+        <a href="https://www.digitalocean.com/products/app-platform/">
+          DigitalOcean App Platform
+        </a>
+        .
+      </p>
+    </div>
   );
 }
