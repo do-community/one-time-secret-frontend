@@ -2,22 +2,28 @@ import React, { useState } from "react";
 
 export default function App() {
   return (
-    <>
-      <div className="py-20 px-10 bg-green-800 text-green-100">
-        {/* create a secret message */}
-        {/* input: secret message */}
-        {/* input: passphrase */}
-        <h2 className="text-3xl font-bold mb-2 text-white">Create a Secret</h2>
-        <CreateSecretForm />
+    <div className="lg:grid lg:grid-cols-2">
+      <div className="lg:min-h-screen flex justify-center items-center py-20 px-10 bg-green-500 text-green-100">
+        <div className="max-w-xl mx-auto">
+          {/* create a secret message */}
+          {/* input: secret message */}
+          {/* input: passphrase */}
+          <h2 className="text-3xl font-bold mb-2 text-white">
+            Create a Secret
+          </h2>
+          <CreateSecretForm />
+        </div>
       </div>
-      <div className="py-20 px-10 bg-blue-800 text-blue-100">
-        {/* input: hash */}
-        {/* input: passphrase */}
-        {/* show: secret message */}
-        <h2 className="text-3xl font-bold mb-2 text-white">Show a Secret</h2>
-        <ShowSecretForm />
+      <div className="lg:min-h-screen flex justify-center items-center py-20 px-10 bg-blue-500 text-blue-100">
+        <div className="max-w-xl mx-auto">
+          {/* input: hash */}
+          {/* input: passphrase */}
+          {/* show: secret message */}
+          <h2 className="text-3xl font-bold mb-2 text-white">Show a Secret</h2>
+          <ShowSecretForm />
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -29,25 +35,18 @@ function CreateSecretForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    // const res = await fetch(
-    //   "https://python-ots-app-8p2lv.ondigitalocean.app/secrets",
-    //   {
-    //     method: "POST",
-    //     data: JSON.stringify({ message, passphrase })
-    //   }
-    // );
-    // const data = await res.json();
-
-    // TODO: replace with real data
-    const data = {
-      id: "9b2d48af1f04474fb00bfa3357eb5ede",
-      success: "True"
-    };
+    const res = await fetch(
+      "https://python-ots-app-8p2lv.ondigitalocean.app/secrets",
+      {
+        method: "POST",
+        data: JSON.stringify({ message, passphrase }),
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    const data = await res.json();
 
     // now we have a hash/id from the api
     // display that to the user so they can give that to friends
-    console.log(data);
-
     setSecretId(data.id);
   }
 
@@ -97,14 +96,14 @@ function ShowSecretForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    // const res = await fetch(`https://python-ots-app-8p2lv.ondigitalocean.app/secrets/${id}`, {
-    //   method: "POST",
-    //   data: JSON.stringify({ id, passphrase })
-    // });
-    // const data = await res.json();
-
-    // TODO: replace with real data!
-    const data = {};
+    const res = await fetch(
+      `https://python-ots-app-8p2lv.ondigitalocean.app/secrets/${id}`,
+      {
+        method: "POST",
+        data: JSON.stringify({ id, passphrase }),
+      }
+    );
+    const data = await res.json();
 
     // now we have a hash/id from the api
     // display that to the user so they can give that to friends
@@ -134,7 +133,7 @@ function ShowSecretForm() {
           onChange={(e) => setPassphrase(e.target.value)}
         />
 
-        <button className="py-2 px-4 rounded bg-blue-400 text-blue-900 text-sm">
+        <button className="py-2 px-4 rounded bg-red-400 text-red-900 text-sm">
           Show My Secret
         </button>
       </form>
