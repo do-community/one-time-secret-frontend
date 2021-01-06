@@ -3,30 +3,35 @@ import axios from "axios";
 
 export default function App() {
   return (
-    <div className="relative lg:grid lg:grid-cols-2">
-      {/* <Info /> */}
+    <>
+      <div className="relative lg:grid lg:grid-cols-2">
+        <Info />
 
-      <div className="lg:min-h-screen flex justify-center items-center py-20 px-10 bg-green-500 text-green-100">
-        <div className="max-w-xl mx-auto">
-          {/* create a secret message */}
-          {/* input: secret message */}
-          {/* input: passphrase */}
-          <h2 className="text-3xl font-bold mb-2 text-white">
-            Create a Secret
-          </h2>
-          <CreateSecretForm />
+        <div className="lg:min-h-screen flex justify-center items-center py-20 px-10 bg-green-500 text-green-100">
+          <div className="max-w-xl mx-auto">
+            {/* create a secret message */}
+            {/* input: secret message */}
+            {/* input: passphrase */}
+            <h2 className="text-3xl font-bold mb-2 text-white">
+              Create a Secret
+            </h2>
+            <CreateSecretForm />
+          </div>
+        </div>
+        <div className="lg:min-h-screen flex justify-center items-center py-20 px-10 bg-blue-500 text-blue-100">
+          <div className="max-w-xl mx-auto">
+            {/* input: hash */}
+            {/* input: passphrase */}
+            {/* show: secret message */}
+            <h2 className="text-3xl font-bold mb-2 text-white">
+              Show a Secret
+            </h2>
+            <ShowSecretForm />
+          </div>
         </div>
       </div>
-      <div className="lg:min-h-screen flex justify-center items-center py-20 px-10 bg-blue-500 text-blue-100">
-        <div className="max-w-xl mx-auto">
-          {/* input: hash */}
-          {/* input: passphrase */}
-          {/* show: secret message */}
-          <h2 className="text-3xl font-bold mb-2 text-white">Show a Secret</h2>
-          <ShowSecretForm />
-        </div>
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 
@@ -43,7 +48,7 @@ function CreateSecretForm() {
         "https://python-ots-app-8p2lv.ondigitalocean.app/api/secrets",
         {
           message,
-          passphrase
+          passphrase,
         }
       );
 
@@ -103,7 +108,7 @@ function ShowSecretForm() {
 
     try {
       const {
-        data
+        data,
       } = await axios.post(
         `https://python-ots-app-8p2lv.ondigitalocean.app/api/secrets/${id}`,
         { id, passphrase }
@@ -162,7 +167,7 @@ function ShowSecretForm() {
 
 function Info() {
   return (
-    <div className="bg-white rounded shadow-2xl absolute top-0 right-0 mr-8 mt-8 p-5">
+    <div className="bg-white lg:rounded lg:shadow-2xl lg:absolute lg:top-0 lg:right-0 lg:mr-8 lg:mt-8 py-5 px-8">
       <h2 className="font-bold text-xl mb-4">One Time Secret App</h2>
 
       <p>
@@ -173,5 +178,23 @@ function Info() {
         .
       </p>
     </div>
+  );
+}
+
+function Footer() {
+  return (
+    <a
+      style={{
+        backgroundImage: `url('https://www.digitalocean.com/static/bg-home-hero-3-bb4b33b77274db09b969f629ad81c4d5.svg')`,
+      }}
+      className="p-10 text-white text-xl font-bold flex justify-center items-center"
+      href="https://do.co/chris"
+    >
+      Hosted on{" "}
+      <img
+        src="https://i.imgur.com/h482SSG.png"
+        className="h-6 md:h-10 ml-4 transform"
+      />
+    </a>
   );
 }
